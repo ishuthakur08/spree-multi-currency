@@ -4,11 +4,11 @@ $:.push File.expand_path("../lib", __FILE__)
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_multi_currency'
-  s.version     = '2.4.0'
+  s.version     = "3.0.0"
   s.summary     = 'Add gem summary here'
   s.required_ruby_version = '>= 1.9.3'
-  s.authors     = ["Pronix LLC"]
-  s.email       = ["parallel588@gmail.com","pronix.service@gmail.com"]
+  s.authors     = ["Diksha"]
+  s.email       = ["ds.thakur@outlook.com"]
   s.homepage    = "http://nanopodcast-pronix.rhcloud.com/"
   s.summary     = %q{spree_multi_currency}
   s.description = %q{spree_multi_currency}
@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
 
   s.require_path = ['lib']
 
-  s.add_dependency('spree_core',		'~> 2.4.0.rc3')
+  s.add_dependency(%q<spree_core>, ["~> 3.0.0"])
   s.add_dependency('nokogiri',  		'>= 1.4.4')
   s.add_dependency('money',     		'>= 5.0.0')
   s.add_dependency('json',      		'>= 1.5.1')

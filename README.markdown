@@ -9,8 +9,11 @@ Support different currency and recalculate price from one to another
 Installation
 ---------
 Add to Gemfile
+    
+    gem "spree_multi_currency", :github => "ishuthakur08/spree-multi-currency"
 
-    gem "spree_multi_currency", :git => "git://github.com/pronix/spree-multi-currency.git"
+    ``` For Spree 3
+    gem "spree_multi_currency", :github => "ishuthakur08/spree-multi-currency", branch: '3-0-stable'
 
 Run
 ---
@@ -108,100 +111,3 @@ Example for usd, eur
           format:
             format: "%u%n"
             unit: "€"
-
-
-
-
-= Multi Currency
-
-Support different currency and recalculate price from one to another
-===========================================
-Installation
----------
-Add to Gemfile
-    gem "spree_multi_currency", :git => "git://github.com/pronix/spree-multi-currency.git"
-
-Run
----
-    rake spree_multi_currency:install:migrations
-    rake db:migrate
-
-Load currencies:
----------------
-    rake spree_multi_currency:currency:from_moneylib
-
-Load rates:
-----------
-    rake spree_multi_currency:rates:cbr                               # Курс Сбербанка РФ http://www.cbr.ru
-    rake "spree_multi_currency:rates:ecb[load_currencies]"              # Rates from European Central Bank
-
-
-Settings
----------
-        In admin block, configuration menu add two tables currency and currency conversion rate
-        In reference currency enters the list of currencies, indicate if one of the major currencies (in the currency keeps all prices). Each currency assign corresponding locale.
-        In Exchange Rates, provides information on the price of the currency on a specified date to the basic currency(from russian central bank).
-        In the exchange rates set date, currency, and face value of the currency in the base currency.
-        To fill in the exchange rate, you can use task for download exchange rates from the site of the Central Bank (http://www.cbr.ru):
-        rake spree_multi_currencies:rates:cbr, as in this problem, loading the list of currencies.
-
-        В справочнике Валюты заносим список валют, указываем одну из валют основной (в этой валюте хранятся все цены). Каждой валюте назначаем соответствующую локаль.
-        В справчнике Курсы валют, содержиться информация о цене валюты на определенную дату к основной валюте.
-        В курсе валют указываеться дата, валюта, номинал и стоимость валюты в основной валюте.
-        Для заполнения курса валют, можно воспользоватьбся задачей загрузки курса валют с сайта ЦБ(http://www.cbr.ru):
-        rake spree_multi_currencies:rates:cbr, так же в этой задаче идет загрузка списка валют.
-
-Смена валюты
--------------
- По умолчанию валюта выбирается от текущей локали сайта.
- Так же можно сменить локаль по адресу http://[domain]/currency/[isocode], <%= link_to "eur", currency_path(:eur) %>
-
- isocode: eur, usd, rub (цифровой код прописанные в справочнике валюты)
- После смены валюты через url перестает работать смена валюты на основание текущей локали.
-
-Формат вывода валюты
---------------------
-Формат для валюты прописан в локализации, для каждой валюты нужно описать свою локализацию (прописаны eur, usd, rub):
-Пример для usd, eur
-
-    --
-    currency_USD: &usd
-      number:
-        currency:
-          format:
-            format: "%u%n"
-            unit: "$"
-            separator: "."
-            delimiter: ","
-            precision: 2
-            significant: false
-            strip_insignificant_zeros: false
-
-    currency_EUR:
-      <<: *usd
-      number:
-        currency:
-          format:
-            format: "%u%n"
-            unit: "€"
-
-
-For tests
----------
-For start tests require exec:
-`bundle exec rake test_app && bundle exec rake spec`
-
-extention require store in ./spree
-in Rakefile defined
-
-    # require define path to spree project
-    ENV['SPREE_GEM_PATH'] = "/home/dima/project/spree"
-    # or define spree as gem in Gemfile
-    # and decomment this
-    # gemfile = Pathname.new("Gemfile").expand_path
-    # lockfile = gemfile.dirname.join('Gemfile.lock')
-    # definition = Bundler::Definition.build(gemfile, lockfile, nil)
-    # sc=definition.index.search "spree"
-    # ENV['SPREE_GEM_PATH'] = sc[0].loaded_from.gsub(/\/[a-z_]*.gemspec$/,'')
-
-
